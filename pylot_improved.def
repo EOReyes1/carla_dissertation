@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: erdosproject/pylot:v0.3.2
+
+%post
+    export HOME=/home/erdos
+    export PYLOT_HOME=/home/erdos/workspace/pylot/
+    export CARLA_HOME=/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1
+    export PYTHONPATH="/home/erdos/workspace/pylot/dependencies/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/dist/carla-0.9.10-py3.7-linux-x86_64.egg:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/agents/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/:/home/erdos/workspace/scenario_runner"
+    
+    # Reinstall the editable Pylot installation
+    cd /home/erdos/workspace/pylot/
+    python3 -m pip install -e ./
+    
+    # Re-run the install script to ensure all dependencies are present
+    cd /home/erdos/workspace/pylot/ && ./install.sh
+
+    mkdir -p /home/erdos/workspace/results
+
+%environment
+    export HOME=/home/erdos
+    export PYLOT_HOME=/home/erdos/workspace/pylot/
+    export CARLA_HOME=/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1
+    export PYTHONPATH="/home/erdos/workspace/pylot/dependencies/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/dist/carla-0.9.10-py3.7-linux-x86_64.egg:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/carla/agents/:/home/erdos/workspace/pylot/dependencies/CARLA_0.9.10.1/PythonAPI/:/home/erdos/workspace/scenario_runner"
+
+%runscript
+    /bin/bash
